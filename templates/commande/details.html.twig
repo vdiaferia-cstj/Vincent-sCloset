@@ -1,0 +1,107 @@
+{% extends 'core/base.html.twig' %}
+
+
+{% block body %}
+	<html lang="en">
+
+		<head>
+			<meta charset="utf-8">
+			<meta http-equiv="x-ua-compatible" content="ie=edge">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<title>Review</title>
+
+		</head>
+
+		<body>
+			
+				
+				{% if  commande is null %}
+					<h1 class="no-product">You made no orders up to now.</h1>
+				{% else %}
+	
+
+<section class="h-100 gradient-custom">
+    {% for flash in app.flashes('details') %}
+     <div class="alert {{ flash.color }}"><span class="order-details-text">{{ flash.content }}</span></div>
+       {% endfor %}
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-10 col-xl-8">
+        <div class="card" style="border-radius: 10px;">
+          <div class="card-header px-4 py-5">
+            <h5 class="text-muted mb-0">Thanks for your order, {{user.prenom}}!</h5>
+          </div>
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <p class="lead fw-normal mb-0" >State: {{commande.etat}}</p>
+              <p class="order-details-text">Order #{{commande.idCommande}}</p>
+            </div>
+
+			<!-- un article -->					                     
+			{% for achat in commande.achats %}
+            <div class="card shadow-0 border mb-4">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-2">
+				<img class="img-fluid" src="{{ asset_if(achat.product.imagePath, 'images/comingsoon.png') }}" alt="item"  />  
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="order-details-text">{{achat.product.nom}}</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="order-details-text">{{achat.product.prix}}$ CAD</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                  <p class="order-details-text">Qty: {{achat.quantite}}</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="order-details-text">Total: {{achat.prixAchat * achat.quantite}}$ CAD</p>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+           {% endfor %}
+		   <!-- / un article -->
+
+            <div class="d-flex justify-content-between pt-2">
+              <p class="order-details-text fw-bold" >Order Details</p>
+              <p class="order-details-text"><span class="fw-bold me-4">Subtotal</span> {{commande.getSousTotal}}$</p>
+            </div>
+
+            <div class="d-flex justify-content-between pt-2">
+              <p class="order-details-text">Date ordered : {{commande.getDateCommandeString()}}</p>
+              <p class="order-details-text"><span class="fw-bold me-4">TPS</span> {{commande.getTPS}}$</p>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <p class="order-details-text">Estimated delivery date : Soon, you will get notified</p>
+              <p class="order-details-text"><span class="fw-bold me-4">TVQ</span> {{commande.getTVQ}}$</p>
+            </div>
+
+            <div class="d-flex justify-content-between mb-5">
+              <p class="order-details-text">Delivery adress : {{commande.client.adresse}}, {{commande.client.ville}}, {{commande.client.codePostal}} </p>
+              <p class="order-details-text"><span class="fw-bold me-4">Delivery fees</span>{{commande.fraisLivraison}}$</p>
+            </div>
+          </div>
+          <div class="card-footer border-0 px-4 py-5"
+            style="background-color: #09294c; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+            <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Total
+              paid: <span class="h2 mb-0 ms-2">{{commande.getTotal}}$ CAD</span></h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</section>
+
+
+				{% endif %}
+		
+		</body>
+
+	</html>
+{% endblock %}
+

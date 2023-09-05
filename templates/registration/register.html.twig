@@ -1,0 +1,88 @@
+{% extends 'core/base.html.twig' %}
+{% form_theme registrationForm 'bootstrap_5_layout.html.twig' %}
+
+{% block content %}
+    <body>
+    <main>
+    <div class="row m-5">
+    <div class="col-12 d-flex justify-content-center">
+    <h1 class="h1">Create an account</h1>
+    </div>
+    
+
+    </div>
+    <div class="row">
+         <div class="col-lg-8 mx-auto">
+            <div class="col-12">
+            
+            </div>
+            {% for flash in app.flashes('register')%}
+                <div class="alert my-3 {{ flash.color }}">{{ flash.content }}</div>
+            {% endfor %}
+            {{ form_start(registrationForm, {'attr': {'class': 'needs-validation-register', 'novalidate': 'novalidate' }}) }}
+                <div class="row">
+                    
+                    <div class="col-6">
+                        {{ form_row(registrationForm.email) }}
+                    </div>
+                    <div class="col-6">
+                        {{ form_row(registrationForm.nom) }}   
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="col-6">
+                        {{ form_row(registrationForm.prenom) }}  
+                    </div>
+                    <div class="col-6">
+                        {{ form_row(registrationForm.phone, {'attr': {'class': 'txtPhone'}}) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        {{ form_row(registrationForm.password.first) }}
+                    </div>
+                    <div class="col-6">
+                        {{ form_row(registrationForm.password.second) }}
+                    </div>
+                </div>               
+
+                <div class="row">
+                    <div class="col-6">
+                        {{ form_row(registrationForm.adresse) }}
+                    </div>
+                    <div class="col-6">
+                        {{ form_row(registrationForm.ville) }}
+                    </div>
+                </div>  
+
+                 <div class="row">
+                    <div class="col-6">
+                        {{ form_row(registrationForm.codePostal) }}
+                    </div>
+                    <div class="col-6">
+                        {{ form_row(registrationForm.province) }}
+                    </div>
+                </div>                                     
+                </div>
+                <div class="d-flex justify-content-center mt-5">
+                    {{ form_row(registrationForm.create) }}                  
+                </div>
+                <div class="d-flex justify-content-center mt-5">
+               If you already have an account, please <a style="margin-left:3px" href="{{ path('app_login') }}"> login here</a>
+                </div>
+                {{ form_end(registrationForm) }}
+            </div>
+    </div>
+    </main>
+    </body>
+{% endblock %}
+
+{% block stylesheets %} 
+    
+{% endblock %}
+
+{% block javascripts %}
+    <script defer src="https://cdn.jsdelivr.net/npm/jquery-mask-plugin@1.14.16/dist/jquery.mask.min.js"></script>
+	<script defer src="{{ asset('scripts/js/register.js')}}"></script>
+{% endblock %}

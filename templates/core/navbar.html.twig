@@ -1,0 +1,60 @@
+<!-- Static navbar -->
+         <nav class="navbar navbar-default">
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-md-5 col-sm-11 left-rs" style="margin: 0 auto">
+                     <div class="navbar-header">
+                        
+                     </div>
+                     
+                     <a href="{{ path('app_catalogue')}}"" style="height : 25px"><img src="images_base/logo1.png" alt="" /></a>
+                    
+                     
+                     
+                  </div>
+
+                  </div>
+                  <div class="col-1">
+                     
+                  </div>
+
+                  <div class="col-md-7 col-sm-11">
+                     <div class="right-nav">
+                       
+                        <div class="help-r hidden-xs">
+                        </div>
+                        <div class="nav-b hidden-xs">
+                           <div class="nav-box">
+                              <ul>
+                             {% if app.session.get('panier') == NULL %}
+                                 <li><a href="{{path('app_panier')}}"><i class="fa-sharp fa-solid fa-cart-shopping"></i>0<b>  </b></a></li>
+                               
+                             {% else %}
+                                
+                              
+                                 
+                                 <li><a href="{{path('app_panier')}}"><i class="fa-sharp fa-solid fa-cart-shopping"></i><sup>{{ app.session.get('panier').panier | length}}</sup></a></li>
+                                 
+                                 {% endif %}
+                                 <li><a href="{{ path('app_page')}}">REACH TO US</a></li>
+                                 {% if app.user != NULL %}
+                                 <li><a href="{{ path('app_commande')}}">ORDERS</a></li>
+                                  <a href="{{ path('app_register')}}"><img class="avatar"  src="https://ui-avatars.com/api/?name={{ app.user.prenom }}+{{ app.user.nom }}&rounded=true&background=random" alt=""></a>
+                                  
+                                 {% else %}
+                                 <li><a href="{{ path('app_register')}}"><i class="fa-solid fa-user fa-l"></a></i></li>
+                                 {% endif %}
+                                 
+                              </ul>
+                             
+                           </div>
+                           
+                        </div>
+                        
+                     </div>
+                    
+                  </div>
+               </div>
+            </div>
+            <!--/.container-fluid --> 
+         </nav>

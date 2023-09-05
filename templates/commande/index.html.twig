@@ -1,0 +1,61 @@
+{% extends 'core/base.html.twig' %}
+
+
+{% block body %}
+	<html lang="en">
+
+		<head>
+			<meta charset="utf-8">
+			<meta http-equiv="x-ua-compatible" content="ie=edge">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<title>Review</title>
+
+		</head>
+
+		<body>
+			<main>
+				{% for flash in app.flashes('panier') %}
+					<div class="alert {{ flash.color }}">{{ flash.content }}</div>
+				{% endfor %}
+				{% if  user.commandes is empty %}
+					<h1 class="no-product">You made no orders up to now.</h1>
+				{% else %}
+<h1 class="h1">Your orders </h1>
+<table class="table table-sm">
+
+	<thead class="table table-sm">
+		<tr>
+			<th scope="col">No. Order</th>
+			<th scope="col">Date of the order</th>
+			<th scope="col">Total of the order</th>
+			<th scope="col">State of the order</th>
+			<th scope="col">Details</th>
+		</tr>
+	</thead>
+	<tbody>
+{% for commande in commandes %}
+
+<tr class="table-primary">
+<th scope="row">{{commande.IdCommande}}</th>
+<td>{{commande.getDateCommandeString()}}</td>
+<td>{{commande.getTotal()}}$</td>
+<td>{{commande.etat}}  </td>
+<td><a href="{{path('app_details', {idCommande: commande.idCommande})}}"><i class="fa-sharp fa-solid fa-eye"></i></a></td>
+</tr>
+
+
+{% endfor %}
+
+		
+	</tbody>
+</table>
+
+
+
+				{% endif %}
+			</main>
+		</body>
+
+	</html>
+{% endblock %}
+

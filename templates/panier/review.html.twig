@@ -1,0 +1,98 @@
+
+{% extends 'core/base.html.twig' %}
+
+
+{% block body %}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Review</title>
+
+</head>
+
+<body>
+  <main>
+  {% for flash in app.flashes('panier') %}
+     <div class="alert {{ flash.color }}">{{ flash.content }}</div>
+    {% endfor %}
+  {% if not app.session.get('panier').panier %}
+  <h1 class="no-product">There's no products in your cart.</h1>
+  {% else %}
+  
+  <h1 class="h1">Review</h1>
+    <div class="basket">
+      
+      <div class="basket-labels">
+        <ul>
+          <li class="item item-heading">Item</li>
+          <li class="price">Price</li>
+          <li class="quantity">Quantity</li>
+          <li class="subtotal">Subtotal</li>
+        </ul>
+      </div>
+      <!-- Un produit -->
+
+       {% for key, achat in panier.panier %}
+      <div class="basket-product">
+        <div class="item">
+          <div class="product-image">
+            <img src="{{achat.product.getImagePath()}}" alt="Placholder Image 2" class="product-frame">
+          </div>
+          <div class="product-details">
+            <h1><strong>{{achat.product.nom}}</strong></h1> 
+         
+          </div>
+        </div>
+        <div class="price" style="color: #3caa73;">{{achat.product.prix }}</div>
+        <div class="quantity">
+        {{achat.quantite}}        
+        </div>
+        <div class="price" style="color: #3caa73;">{{achat.prixAchat * achat.quantite}}</div>
+        
+      </div>
+      {% endfor %}
+      <!---->
+    </div>
+    <aside>
+      <div class="summary">
+      
+        
+        <div class="summary-subtotal">
+          <div class="subtotal-title">Subtotal</div>
+          <div class="subtotal-value final-value" >{{panier.sousTotal}}</div>
+        </div>
+        <div class="summary-subtotal">
+        <div class="subtotal-title">TPS:</div>
+        <h1 class="subtotal-value final-value">{{panier.tps}}</h1>
+        </div>
+        <div class="summary-subtotal">
+        <div class="subtotal-title">TVQ:</div>
+        <h1 class="subtotal-value final-value">{{panier.tvq}}</h1>
+        </div>
+        <div class="summary-subtotal">
+        <h1 class="subtotal-title">Delivery fee:</h1>
+        <div class="subtotal-value final-value" >{{panier.fraisLivraison}}</div>
+        </div>
+        <div class="summary-total">
+          <div class="total-title">Total</div>
+          <div class="total-value final-value" ><b style="font-size:12px">{{panier.total}}</b></div>
+        </div>
+        <div class="summary-checkout">
+          <a href="{{ path('stripe_checkout') }}"><button class="checkout-cta btn btn-success">PAY NOW</button></a>
+        </div>   
+        <br>
+        
+        
+           
+      </div>
+
+    </aside>
+    {% endif %}
+  </main>
+</body>
+
+</html>
+{% endblock %}

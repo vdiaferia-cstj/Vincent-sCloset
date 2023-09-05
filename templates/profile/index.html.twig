@@ -1,0 +1,122 @@
+{% extends 'core/base.html.twig' %}
+{% form_theme modificationForm 'bootstrap_5_layout.html.twig' %}
+{% form_theme modificationPasswordForm 'bootstrap_5_layout.html.twig' %}
+
+{% block content %}
+<main class="p-3" >
+   
+    <div class="row">
+        <div class="col-6">    
+         <h1 class="h1">Profile</h1> 
+    
+            <img class="avatar"  src="https://ui-avatars.com/api/?name={{ currentUser.prenom }}+{{ currentUser.nom }}&rounded=true&background=random" alt="">
+            
+            <h5>Hi, {{ app.user.prenom }} {{ app.user.nom }}</h5>     
+            
+            <span ><a href="{{ path('app_logout') }}">Disconnect</a></span>   
+        </div> 
+            
+           
+          
+
+
+
+            <div class="col-6" >
+              {% if notificationUpdate %}
+                <div class="alert {{ notificationUpdate.color }}">{{ notificationUpdate.content }}</div>
+             {% endif %}
+            <h3 class="mb-3" style="text-align:center" >Update your informations</h3>
+            {{ form_start(modificationForm, {'attr': {'class': 'needs-validation-register', 'novalidate': 'novalidate' }}) }}
+                <div class="row">
+                    
+                    <div class="col-6">
+                            <label class="form-label">Email</label>
+                            <input value="{{app.user.email}}" class="form-control" disabled/>
+                        </div>
+                    <div class="col-6">
+                        {{ form_row(modificationForm.nom) }}   
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="col-6">
+                        {{ form_row(modificationForm.prenom) }}  
+                    </div>
+                    <div class="col-6">
+                        {{ form_row(modificationForm.phone, {'attr': {'class': 'txtPhone'}}) }}
+                    </div>
+                </div>
+               
+
+                <div class="row">
+                    <div class="col-6">
+                        {{ form_row(modificationForm.adresse) }}
+                    </div>
+                    <div class="col-6">
+                        {{ form_row(modificationForm.ville) }}
+                    </div>
+                </div>  
+
+                 <div class="row">
+                    <div class="col-6">
+                        {{ form_row(modificationForm.codePostal) }}
+                    </div>
+                    <div class="col-6">
+                        {{ form_row(modificationForm.province) }}
+                    </div>
+                </div>                                     
+                
+                <div class="d-flex justify-content-center mt-5">
+                    {{ form_row(modificationForm.update) }}      
+                    {{ form_end(modificationForm) }}            
+                </div>
+                </div>
+                
+            </div>
+            
+    </div>
+    <div class="row">
+    <div class="col-6">
+
+    </div>
+                    <div class="col-6">
+                    {% if notificationPassword %}
+                     <div class="mt-5 alert {{ notificationPassword.color }}">{{ notificationPassword.content }}</div>
+                    {% endif %}
+                    <h3 class="mt-5" style="text-align:center" >Update your password</h3>
+                    <div class="row">
+                       {{ form_start(modificationForm, {'attr': {'class': 'needs-validation-register', 'novalidate': 'novalidate' }}) }}        
+                       {{ form_row(modificationPasswordForm.oldPassword) }}                   
+                        {{ form_row(modificationPasswordForm.newPassword.first) }}
+                        {{ form_row(modificationPasswordForm.newPassword.second) }}        
+                    </div>
+                    <div class="col-12 d-flex justify-content-center mt-3">    
+                              {{ form_row(modificationPasswordForm.update) }}         
+                             {{ form_end(modificationPasswordForm) }}          
+
+                           
+                            </div>
+                    </div>   
+                            
+                               
+                      
+                          
+                         
+                           
+               
+    </div>
+       
+        
+    
+    </main>
+{% endblock %}
+
+
+{% block stylesheets %} 
+    
+{% endblock %}
+
+{% block javascripts %}
+ <script defer src="https://cdn.jsdelivr.net/npm/jquery-mask-plugin@1.14.16/dist/jquery.mask.min.js"></script>
+	<script defer src="{{ asset('scripts/js/register.js')}}"></script>
+{% endblock %}

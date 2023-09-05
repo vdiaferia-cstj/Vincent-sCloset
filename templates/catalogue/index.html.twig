@@ -1,0 +1,81 @@
+{% extends 'core/base.html.twig' %}
+ 
+   {% block content %}
+ 
+
+      <div class="page-content-product">
+         <div class="main-product">
+            <div class="container">
+               <div class="row clearfix">
+                  <div class="find-box">
+                     <h1>SEASON<br>2023</h1>
+                     <h4>LIMITED STOCKS.</h4>
+                     <div class="product-sh">
+                        <div class="col-sm-6">
+                        <form method="POST" action="{{app.request.uri}}">
+                           <div class="form-sh">
+                              <input name="search_field" type="search" placeholder="SEARCH" >
+                           </div>
+                        </div>
+                        <div class="col-sm-3">
+                           <div class="form-sh">
+                              <select class="form-select form-select-lg mb-3" style="height: 55px" onchange="location = this.value;">
+                              {% for cat in categories %}
+                              {% if cat.idCategorie == categorySelected %}
+                                 <option value="{{path('app_catalogue', {categorie: cat.idCategorie})}}" selected>{{cat.categorie}}</option>
+                              {% else %}
+                                 <option value="{{path('app_catalogue', {categorie: cat.idCategorie})}}">{{cat.categorie}}</option>
+                              {% endif %}
+                               {% endfor %}
+                              </select>
+                           </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <button type="submit" class="btn btn-success" style="height: 55px; width: 100px">Search</button> 
+                        </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+               <div class="row clearfix">
+            {% if produits|length > 0 %}
+               {% for produit in produits %}
+                  <div class="col-lg-3 col-sm-6 col-md-3"  >
+                     <a  class="produit-test" href="{{ path('product_modal', { idProduit: produit.idProduit })}}" >
+                        <div class="box-img">
+                           <h4 class="product-name">{{produit.nom}}</h4>                          
+                          <h2>{{produit.prix}}$ CAD</h2>
+                           <img src="{{ asset_if(produit.imagePath, 'images/comingsoon.png') }}" alt="" style="height:255px" />
+                           
+                            <a href="{{path('app_add', {idProduit: produit.idProduit})}}" ><i class="fa-solid fa-cart-plus" style="color: #3caa73; font-size: 25px; margin-top: 5px"></i></a>
+                        </div>    
+                     </a>
+                  </div>
+               {% endfor %}
+            {% else %}
+            <div style="text-align: center">
+            <h1>Aucun produits dans cette catégorie.</h1>
+            </div>
+            {% endif %}
+                </div>
+            </div>
+         </div>
+         
+      </div>
+      <div class="modal" tabindex="-1" id="produit-modal">
+        <div class="modal-dialog">
+            <div id="produit-modal-content" class="modal-content">
+                
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block stylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<script src="{{ asset('scripts/js/modal.produit.js') }}"></script>
+{% endblock %}
